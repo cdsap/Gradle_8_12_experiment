@@ -20,7 +20,7 @@ jobs:
       pull-requests: write
       security-events: write
 
-    timeout-minutes: 2
+    timeout-minutes: 3
 
     steps:
       - name: Checkout
@@ -37,7 +37,7 @@ jobs:
 
       - name: Check spotless
         run: |
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --info
           if [ $? -ne 0 ]; then
             echo "Gradle build failed. Capturing daemon logs..."
             cp ~/.gradle/daemon/*/daemon-*.log gradle-daemon.log
