@@ -37,7 +37,7 @@ jobs:
 
       - name: Check spotless
         run: |
-          ./gradlew assembleDebug --info
+          ./gradlew assembleDebug
           if [ $? -ne 0 ]; then
             echo "Gradle build failed. Capturing daemon logs..."
             cp ~/.gradle/daemon/*/daemon-*.log gradle-daemon.log
