@@ -48,7 +48,6 @@ jobs:
           while kill -0 $GRADLE_PID 2>/dev/null; do
           sleep 5 # Adjust interval as needed
           done
-          # Gradle process is about to terminate; generate stack trace
           echo "Gradle process is terminating. Capturing stack trace..."
           jstack -l $GRADLE_PID > $STACK_TRACE_FILE || echo "Failed to capture stack trace"
           ) &
@@ -65,4 +64,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
             name: gradle-daemon-logs
-            path: gradle-x*
+            path: gradle-x-stack-trace.txt
