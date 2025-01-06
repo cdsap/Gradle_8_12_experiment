@@ -37,7 +37,14 @@ jobs:
 
       - name: Check spotless
         run: |
-          bash assemble.sh
+            ./gradlew assembleDebug &
+            GRADLE_PID=$!
+
+          # Trap SIGTERM to capture the stack trace
+            trap "echo 'SIGTERM caught! Generating stack trace...'; jstack -l $GRADLE_PID > gradle-stack-trace.txt || echo 'Failed to capture stack trace'; kill $GRADLE_PID" SIGTERM
+
+          # Wait for Gradle process to complete
+            wait $GRADLE_PID || echo "Gradle build exited with non-zero status"
         continue-on-error: true
 
       - name: Upload Gradle Daemon Logs
@@ -45,4 +52,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
             name: gradle-daemon-logs
-            path: ~/.gradle/daemon/**/*.log
+            path: gradle-stack-trace.txt
