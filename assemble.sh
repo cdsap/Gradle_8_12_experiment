@@ -18,6 +18,7 @@
 
 # Define the log path
 GRADLE_DAEMON_LOG="$HOME/.gradle/daemon/8.12/daemon-*.log"
+echo "1"
 DEST_LOG_PATH="daemon-log-backup.log"
 
 # Function to handle cleanup on SIGTERM
@@ -29,6 +30,7 @@ function on_exit {
 }
 
 # Trap SIGTERM
+echo "1"
 trap on_exit SIGTERM
 
 # Start Gradle build
