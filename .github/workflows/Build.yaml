@@ -20,7 +20,7 @@ jobs:
       pull-requests: write
       security-events: write
 
-    timeout-minutes: 3
+    timeout-minutes: 2
 
     steps:
       - name: Checkout
@@ -49,4 +49,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
             name: gradle-daemon-logs
-            path: ~/.gradle/daemon/**/*.log
+            path: gradle-daemon.log
