@@ -40,10 +40,10 @@ jobs:
             ./gradlew assembleDebug &
             GRADLE_PID=$!
 
-          # Trap SIGTERM to capture the stack trace
+            # Trap SIGTERM to capture the stack trace
             trap "echo 'SIGTERM caught! Generating stack trace...'; jstack -l $GRADLE_PID > gradle-stack-trace.txt || echo 'Failed to capture stack trace'; kill $GRADLE_PID" SIGTERM
 
-          # Wait for Gradle process to complete
+            # Wait for Gradle process to complete
             wait $GRADLE_PID || echo "Gradle build exited with non-zero status"
         continue-on-error: true
 
