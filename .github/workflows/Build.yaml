@@ -36,5 +36,17 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Check spotless
-        run: ./gradlew assembleDebug
+        run: |
+          ./gradlew assembleDebug
+          if [ $? -ne 0 ]; then
+            echo "Gradle build failed. Capturing daemon logs..."
+            cp ~/.gradle/daemon/*/daemon-*.log gradle-daemon.log
+          fi
+        continue-on-error: true
 
+      - name: Upload Gradle Daemon Logs
+        if: always() # Ensure this step runs even if the build fails or times out
+        uses: actions/upload-artifact@v3
+        with:
+            name: gradle-daemon-logs
+            path: ~/.gradle/daemon/**/*.log
